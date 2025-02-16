@@ -31,6 +31,9 @@
 #define UP 1
 #define HZ 2
 
+#define SPEED_UP 80
+#define SPEED_DOWN 50
+
 namespace lift {
     xSemaphoreHandle xSemaphore;
 
@@ -122,10 +125,10 @@ namespace lift {
         while (true) {
             if (!digitalRead(MOTOR1_UP) && !digitalRead(MOTOR2_UP) && !digitalRead(MOTOR3_UP) && !digitalRead(MOTOR4_UP)) {break;}
 
-            if (!digitalRead(MOTOR1_UP)) {ledcWrite(MOTOR1_CHANNEL, 0);} else {ledcWrite(MOTOR1_CHANNEL, 220);}
-            if (!digitalRead(MOTOR2_UP)) {ledcWrite(MOTOR2_CHANNEL, 0);} else {ledcWrite(MOTOR2_CHANNEL, 220);}
-            if (!digitalRead(MOTOR3_UP)) {ledcWrite(MOTOR3_CHANNEL, 0);} else {ledcWrite(MOTOR3_CHANNEL, 220);}
-            if (!digitalRead(MOTOR4_UP)) {ledcWrite(MOTOR4_CHANNEL, 0);} else {ledcWrite(MOTOR4_CHANNEL, 220);}
+            if (!digitalRead(MOTOR1_UP)) {ledcWrite(MOTOR1_CHANNEL, 0);} else {ledcWrite(MOTOR1_CHANNEL, SPEED_UP);}
+            if (!digitalRead(MOTOR2_UP)) {ledcWrite(MOTOR2_CHANNEL, 0);} else {ledcWrite(MOTOR2_CHANNEL, SPEED_UP);}
+            if (!digitalRead(MOTOR3_UP)) {ledcWrite(MOTOR3_CHANNEL, 0);} else {ledcWrite(MOTOR3_CHANNEL, SPEED_UP);}
+            if (!digitalRead(MOTOR4_UP)) {ledcWrite(MOTOR4_CHANNEL, 0);} else {ledcWrite(MOTOR4_CHANNEL, SPEED_UP);}
 
             vTaskDelay(10 / portTICK_PERIOD_MS);
         }
@@ -154,10 +157,10 @@ namespace lift {
         while (true) {
             if (!digitalRead(MOTOR1_DOWN) && !digitalRead(MOTOR2_DOWN) && !digitalRead(MOTOR3_DOWN) && !digitalRead(MOTOR4_DOWN)) {break;}
 
-            if (digitalRead(MOTOR1_DOWN)) {ledcWrite(MOTOR1_CHANNEL, 0);} else {ledcWrite(MOTOR1_CHANNEL, 100);}
-            if (!digitalRead(MOTOR2_DOWN)) {ledcWrite(MOTOR2_CHANNEL, 0);} else {ledcWrite(MOTOR2_CHANNEL, 100);}
-            if (!digitalRead(MOTOR3_DOWN)) {ledcWrite(MOTOR3_CHANNEL, 0);} else {ledcWrite(MOTOR3_CHANNEL, 100);}
-            if (!digitalRead(MOTOR4_DOWN)) {ledcWrite(MOTOR4_CHANNEL, 0);} else {ledcWrite(MOTOR4_CHANNEL, 100);}
+            if (digitalRead(MOTOR1_DOWN)) {ledcWrite(MOTOR1_CHANNEL, 0);} else {ledcWrite(MOTOR1_CHANNEL, SPEED_DOWN);}
+            if (!digitalRead(MOTOR2_DOWN)) {ledcWrite(MOTOR2_CHANNEL, 0);} else {ledcWrite(MOTOR2_CHANNEL, SPEED_DOWN);}
+            if (!digitalRead(MOTOR3_DOWN)) {ledcWrite(MOTOR3_CHANNEL, 0);} else {ledcWrite(MOTOR3_CHANNEL, SPEED_DOWN);}
+            if (!digitalRead(MOTOR4_DOWN)) {ledcWrite(MOTOR4_CHANNEL, 0);} else {ledcWrite(MOTOR4_CHANNEL, SPEED_DOWN);}
 
             vTaskDelay(10 / portTICK_PERIOD_MS);
         }
