@@ -1,0 +1,48 @@
+TrajectoryPlannerROS:
+  # holonomic_robot: true  # Указываем, что робот может двигаться боком
+
+  # # Линейные и угловые скорости
+  # max_vel_x: 0.3
+  # min_vel_x: -0.3
+  # max_vel_y: 0.3
+  # min_vel_y: -0.3
+  # max_vel_theta: 0.5
+  # min_vel_theta: -0.5
+  # acc_lim_x: 0.1
+  # acc_lim_y: 0.1
+  # acc_lim_theta: 0.1
+
+  # # Траектории
+  # #sim_time: 1.5
+  # #sim_granularity: 0.05
+  # vx_samples: 20
+  # vy_samples: 20  # Добавляем образцы для бокового движения
+  # vtheta_samples: 40
+
+  # # Параметры расстояния
+  # path_distance_bias: 0.6
+  # goal_distance_bias: 0.8
+  # occdist_scale: 0.01
+
+  # # Точка опережения на траектории
+  # forward_point_distance: 0.1
+
+  meter_scoring: true
+
+  sim_time: 1.5
+
+  holonomic_robot: true
+  vx_samples: 20
+  vy_samples: 20
+  vtheta_samples: 40
+  max_vel_x: 0.3
+  max_vel_y: 0.3
+  max_vel_theta: 0.3
+  acc_lim_x: 0.3
+  acc_lim_y: 0.3
+  acc_lim_theta: 0.3
+  goal_distance_bias: 0.2
+  path_distance_bias: 0.8
+
+  occdist_scale: 0.1  # Увеличьте, если робот слишком близко подходит к препятствиям
+  #heading_scoring: true

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RobotConnect">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Подключение к роботу"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/funny_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/stul"
+        android:scaleType="fitCenter"
+        android:maxHeight="250dp"
+        android:adjustViewBounds="true"
+        android:layout_margin="25dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+    <ListView
+        android:id="@+id/devices_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/funny_image" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

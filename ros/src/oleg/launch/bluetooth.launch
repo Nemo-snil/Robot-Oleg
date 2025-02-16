@@ -1,0 +1,8 @@
+<launch>
+    <node pkg="oleg" name="bluetooth" type="bluetooth.py" respawn="true" />
+    
+    <node pkg="rosserial_python" name="serial_node" type="serial_node.py" respawn="true" output="screen">
+        <param name="port" type="string" value="/dev/ttyACM0" />
+        <param name="baud" type="int" value="1000000" />
+    </node>
+</launch>

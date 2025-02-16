@@ -1,0 +1,17 @@
+<launch>
+    <node pkg="rosserial_python" name="serial_node" type="serial_node.py" respawn="true">
+        <param name="port" type="string" value="/dev/ttyACM0" />
+        <param name="baud" type="int" value="1000000" />
+    </node>
+
+    <node pkg="rplidar_ros" name="rplidarNode" type="rplidarNode">
+        <param name="frame_id" type="string" value="base_laser" />
+        <param name="serial_port" type="string" value="/dev/ttyUSB1" />
+    </node>
+
+    <node pkg="oleg" name="odometry" type="odometry.py"/>
+
+    <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_base_to_laser" args="0.0 0 0.4 0 0 0 base_link base_laser"/>
+
+    <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_base_to_camera" args="0.20 0 0.0 0 0 0 base_link base_camera"/>
+</launch> 

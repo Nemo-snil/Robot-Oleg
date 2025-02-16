@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    tools:context=".Controller">
+
+    <io.github.controlwear.virtual.joystick.android.JoystickView
+        android:id="@+id/linear_joystick"
+        android:layout_width="289dp"
+        android:layout_height="286dp"
+        app:JV_borderColor="@color/black"
+        app:JV_borderWidth="5dp"
+        app:JV_fixedCenter="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <SeekBar
+        android:id="@+id/angle_joystick"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginEnd="50dp"
+        android:scaleY="5"
+        android:max="200"
+        android:progress="100"
+        app:layout_constraintBottom_toBottomOf="@id/linear_joystick"
+        app:layout_constraintLeft_toRightOf="@id/linear_joystick"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/linear_joystick" />
+
+    <Button
+        android:id="@+id/up_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Вверх"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/angle_joystick"
+        app:layout_constraintLeft_toLeftOf="@id/angle_joystick"
+        app:layout_constraintRight_toRightOf="@id/angle_joystick"
+        app:layout_constraintTop_toTopOf="@id/linear_joystick" />
+
+    <Button
+        android:id="@+id/down_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Вниз"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/linear_joystick"
+        app:layout_constraintLeft_toLeftOf="@id/angle_joystick"
+        app:layout_constraintRight_toRightOf="@id/angle_joystick"
+        app:layout_constraintTop_toBottomOf="@id/angle_joystick" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

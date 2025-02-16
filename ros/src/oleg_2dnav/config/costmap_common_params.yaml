@@ -1,0 +1,10 @@
+obstacle_range: 2.5
+raytrace_range: 3.0
+footprint: [[0.36, 0.16], [0.36, -0.16], [-0.36, -0.16], [-0.36, 0.16]]
+#footprint: [[0.4, 0.2], [0.4, -0.2], [-0.4, -0.2], [-0.4, 0.2]]
+inflation_radius: 0.2
+transform_tolerance: 0.5
+controller_frequency: 10.0  # Частота в Гц
+
+# Тип карты
+map_type: costmap
