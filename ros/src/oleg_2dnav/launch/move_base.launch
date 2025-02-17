@@ -1,6 +1,6 @@
 <launch>
   <!-- Подключаем карту -->
-   <node pkg="map_server" type="map_server" name="map_server" args="$(find my_robot_name_2dnav)/maps/hata.yaml"/>
+   <node pkg="map_server" type="map_server" name="map_server" args="$(find oleg_2dnav)/maps/hata.yaml"/>
 
   <!-- AMCL для локализации -->
   <node pkg="amcl" type="amcl" name="amcl" output="screen">
@@ -21,18 +21,18 @@
   <!-- Move Base -->
   <node pkg="move_base" type="move_base" name="move_base" output="screen">
     <!-- Общие параметры -->
-    <rosparam file="$(find my_robot_name_2dnav)/config/costmap_common_params.yaml" command="load" />
+    <rosparam file="$(find oleg_2dnav)/config/costmap_common_params.yaml" command="load" />
     <!-- Глобальный costmap -->
-    <rosparam file="$(find my_robot_name_2dnav)/config/global_costmap.yaml" command="load" />
+    <rosparam file="$(find oleg_2dnav)/config/global_costmap.yaml" command="load" />
     <!-- Локальный costmap -->
-    <rosparam file="$(find my_robot_name_2dnav)/config/local_costmap.yaml" command="load" />
+    <rosparam file="$(find oleg_2dnav)/config/local_costmap.yaml" command="load" />
     <!-- Планировщики -->
-    <rosparam file="$(find my_robot_name_2dnav)/config/base_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find oleg_2dnav)/config/base_local_planner_params.yaml" command="load" />
 
     <param name="tf_buffer_size" value="120.0"/>
     <param name="allow_extrapolation" value="true"/>
   </node>
 
   <!-- RViz для визуализации -->
-  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find my_robot_name_2dnav)/rviz/navigation_config.rviz" />
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find oleg_2dnav)/rviz/navigation_config.rviz" />
 </launch>

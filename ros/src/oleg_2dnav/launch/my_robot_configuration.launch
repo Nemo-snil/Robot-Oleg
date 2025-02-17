@@ -6,7 +6,7 @@
 
     <node pkg="rplidar_ros" name="rplidarNode" type="rplidarNode">
         <param name="frame_id" type="string" value="base_laser" />
-        <param name="serial_port" type="string" value="/dev/ttyUSB1" />
+        <param name="serial_port" type="string" value="/dev/ttyUSB0" />
     </node>
 
     <node pkg="oleg" name="odometry" type="odometry.py"/>
