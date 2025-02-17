@@ -1,10 +1,12 @@
 <launch>
-    <node pkg="oleg" name="main" type="main.py" respawn="true" output="screen"/>
-
     <node pkg="oleg" type="camera.py" name="camera" respawn="true"/>
+
+    <node pkg="oleg" type="aruco.py" name="aruco" respawn="true"/>
+    
+    <node pkg="oleg" name="main" type="main.py" respawn="true" output="screen"/>
     
     <node pkg="rosserial_python" name="serial_node" type="serial_node.py" respawn="true">
         <param name="port" type="string" value="/dev/ttyACM0" />
-        <param name="baud" type="int" value="1000000" />
+        <param name="baud" type="int" value="115200" />
     </node>
 </launch>
