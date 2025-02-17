@@ -84,9 +84,16 @@ namespace motors {
 
     void motors_callback(const geometry_msgs::Twist& msg) {
         geometry_msgs::Twist* msg_ptr = new geometry_msgs::Twist(msg);
+
         if (xQueueSend(xQueue, &msg_ptr, 0) != pdPASS) {
-            xQueueReceive(xQueue, NULL, 0);
-            xQueueSend(xQueue, &msg_ptr, 0);
+            geometry_msgs::Twist* old_msg_ptr;
+            if (xQueueReceive(xQueue, &old_msg_ptr, 0) == pdPASS) {
+                delete old_msg_ptr;
+            }
+
+            if (xQueueSend(xQueue, &msg_ptr, 0) != pdPASS) {
+                delete msg_ptr;
+            }
         }
     }
 
