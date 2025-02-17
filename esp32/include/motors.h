@@ -71,7 +71,7 @@ namespace motors {
     }
 
     void encoder_reset_callback(const std_srvs::EmptyRequest& req, std_srvs::EmptyResponse& res)  {
-        xTaskCreate(encoder_reset_semaphore, "EncoderReset", 1024, NULL, 1, NULL);
+        xTaskCreate(encoder_reset_semaphore, "EncoderReset", 2048, NULL, 2, NULL);
     }
 
     void encoder_reset_semaphore(void* pvParameters) {
