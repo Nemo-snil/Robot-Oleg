@@ -88,27 +88,11 @@ namespace lift {
     }
 
     void lift_up_callback(const std_srvs::EmptyRequest& req, std_srvs::EmptyResponse& res) {
-        if (xSemaphoreTake(xSemaphore, portMAX_DELAY) == pdTRUE) {
-            xTaskCreate(lift_up, "LiftUp", 1024, NULL, 1, NULL);
-            while (lift_mode != UP) {
-                nh.spinOnce();
-                vTaskDelay(1 / portTICK_PERIOD_MS);
-            }
-
-            xSemaphoreGive(xSemaphore);
-        }
+        xTaskCreate(lift_up, "LiftUp", 1024, NULL, 1, NULL);
     }
 
     void lift_down_callback(const std_srvs::EmptyRequest& req, std_srvs::EmptyResponse& res) {
-        if (xSemaphoreTake(xSemaphore, portMAX_DELAY) == pdTRUE) {
-            xTaskCreate(lift_down, "LiftDown", 1024, NULL, 1, NULL);
-            while (lift_mode != DOWN) {
-                nh.spinOnce();
-                vTaskDelay(1 / portTICK_PERIOD_MS);
-            }
-
-            xSemaphoreGive(xSemaphore);
-        }
+        xTaskCreate(lift_down, "LiftDown", 1024, NULL, 1, NULL);
     }
 
     void lift_up(void* pvParameters) {
@@ -117,30 +101,33 @@ namespace lift {
             return;
         }
 
-        digitalWrite(MOTOR1_DIR, HIGH);
-        digitalWrite(MOTOR2_DIR, HIGH);
-        digitalWrite(MOTOR3_DIR, HIGH);
-        digitalWrite(MOTOR4_DIR, HIGH);
+        if (xSemaphoreTake(xSemaphore, portMAX_DELAY) == pdTRUE) {
+            digitalWrite(MOTOR1_DIR, HIGH);
+            digitalWrite(MOTOR2_DIR, HIGH);
+            digitalWrite(MOTOR3_DIR, HIGH);
+            digitalWrite(MOTOR4_DIR, HIGH);
 
-        while (true) {
-            if (!digitalRead(MOTOR1_UP) && !digitalRead(MOTOR2_UP) && !digitalRead(MOTOR3_UP) && !digitalRead(MOTOR4_UP)) {break;}
+            while (true) {
+                if (!digitalRead(MOTOR1_UP) && !digitalRead(MOTOR2_UP) && !digitalRead(MOTOR3_UP) && !digitalRead(MOTOR4_UP)) {break;}
 
-            if (!digitalRead(MOTOR1_UP)) {ledcWrite(MOTOR1_CHANNEL, 0);} else {ledcWrite(MOTOR1_CHANNEL, SPEED_UP);}
-            if (!digitalRead(MOTOR2_UP)) {ledcWrite(MOTOR2_CHANNEL, 0);} else {ledcWrite(MOTOR2_CHANNEL, SPEED_UP);}
-            if (!digitalRead(MOTOR3_UP)) {ledcWrite(MOTOR3_CHANNEL, 0);} else {ledcWrite(MOTOR3_CHANNEL, SPEED_UP);}
-            if (!digitalRead(MOTOR4_UP)) {ledcWrite(MOTOR4_CHANNEL, 0);} else {ledcWrite(MOTOR4_CHANNEL, SPEED_UP);}
+                if (!digitalRead(MOTOR1_UP)) {ledcWrite(MOTOR1_CHANNEL, 0);} else {ledcWrite(MOTOR1_CHANNEL, SPEED_UP);}
+                if (!digitalRead(MOTOR2_UP)) {ledcWrite(MOTOR2_CHANNEL, 0);} else {ledcWrite(MOTOR2_CHANNEL, SPEED_UP);}
+                if (!digitalRead(MOTOR3_UP)) {ledcWrite(MOTOR3_CHANNEL, 0);} else {ledcWrite(MOTOR3_CHANNEL, SPEED_UP);}
+                if (!digitalRead(MOTOR4_UP)) {ledcWrite(MOTOR4_CHANNEL, 0);} else {ledcWrite(MOTOR4_CHANNEL, SPEED_UP);}
 
-            vTaskDelay(10 / portTICK_PERIOD_MS);
+                vTaskDelay(50 / portTICK_PERIOD_MS);
+            }
+
+            ledcWrite(MOTOR1_CHANNEL, 0);
+            ledcWrite(MOTOR2_CHANNEL, 0);
+            ledcWrite(MOTOR3_CHANNEL, 0);
+            ledcWrite(MOTOR4_CHANNEL, 0);
+
+            lift_mode = UP;
+
+            xSemaphoreGive(xSemaphore);
+            vTaskDelete(NULL);
         }
-
-        ledcWrite(MOTOR1_CHANNEL, 0);
-        ledcWrite(MOTOR2_CHANNEL, 0);
-        ledcWrite(MOTOR3_CHANNEL, 0);
-        ledcWrite(MOTOR4_CHANNEL, 0);
-
-        lift_mode = UP;
-
-        vTaskDelete(NULL);
     }
 
     void lift_down(void* pvParameters) {
@@ -149,29 +136,32 @@ namespace lift {
             return;
         }
 
-        digitalWrite(MOTOR1_DIR, LOW);
-        digitalWrite(MOTOR2_DIR, LOW);
-        digitalWrite(MOTOR3_DIR, LOW);
-        digitalWrite(MOTOR4_DIR, LOW);
+        if (xSemaphoreTake(xSemaphore, portMAX_DELAY) == pdTRUE) {
+            digitalWrite(MOTOR1_DIR, LOW);
+            digitalWrite(MOTOR2_DIR, LOW);
+            digitalWrite(MOTOR3_DIR, LOW);
+            digitalWrite(MOTOR4_DIR, LOW);
 
-        while (true) {
-            if (!digitalRead(MOTOR1_DOWN) && !digitalRead(MOTOR2_DOWN) && !digitalRead(MOTOR3_DOWN) && !digitalRead(MOTOR4_DOWN)) {break;}
+            while (true) {
+                if (!digitalRead(MOTOR1_DOWN) && !digitalRead(MOTOR2_DOWN) && !digitalRead(MOTOR3_DOWN) && !digitalRead(MOTOR4_DOWN)) {break;}
 
-            if (digitalRead(MOTOR1_DOWN)) {ledcWrite(MOTOR1_CHANNEL, 0);} else {ledcWrite(MOTOR1_CHANNEL, SPEED_DOWN);}
-            if (!digitalRead(MOTOR2_DOWN)) {ledcWrite(MOTOR2_CHANNEL, 0);} else {ledcWrite(MOTOR2_CHANNEL, SPEED_DOWN);}
-            if (!digitalRead(MOTOR3_DOWN)) {ledcWrite(MOTOR3_CHANNEL, 0);} else {ledcWrite(MOTOR3_CHANNEL, SPEED_DOWN);}
-            if (!digitalRead(MOTOR4_DOWN)) {ledcWrite(MOTOR4_CHANNEL, 0);} else {ledcWrite(MOTOR4_CHANNEL, SPEED_DOWN);}
+                if (digitalRead(MOTOR1_DOWN)) {ledcWrite(MOTOR1_CHANNEL, 0);} else {ledcWrite(MOTOR1_CHANNEL, SPEED_DOWN);}
+                if (!digitalRead(MOTOR2_DOWN)) {ledcWrite(MOTOR2_CHANNEL, 0);} else {ledcWrite(MOTOR2_CHANNEL, SPEED_DOWN);}
+                if (!digitalRead(MOTOR3_DOWN)) {ledcWrite(MOTOR3_CHANNEL, 0);} else {ledcWrite(MOTOR3_CHANNEL, SPEED_DOWN);}
+                if (!digitalRead(MOTOR4_DOWN)) {ledcWrite(MOTOR4_CHANNEL, 0);} else {ledcWrite(MOTOR4_CHANNEL, SPEED_DOWN);}
 
-            vTaskDelay(10 / portTICK_PERIOD_MS);
+                vTaskDelay(50 / portTICK_PERIOD_MS);
+            }
+            
+            ledcWrite(MOTOR1_CHANNEL, 0);
+            ledcWrite(MOTOR2_CHANNEL, 0);
+            ledcWrite(MOTOR3_CHANNEL, 0);
+            ledcWrite(MOTOR4_CHANNEL, 0);
+
+            lift_mode = DOWN;
+
+            xSemaphoreGive(xSemaphore);
+            vTaskDelete(NULL);
         }
-        
-        ledcWrite(MOTOR1_CHANNEL, 0);
-        ledcWrite(MOTOR2_CHANNEL, 0);
-        ledcWrite(MOTOR3_CHANNEL, 0);
-        ledcWrite(MOTOR4_CHANNEL, 0);
-
-        lift_mode = DOWN;
-
-        vTaskDelete(NULL);
     }
 }
