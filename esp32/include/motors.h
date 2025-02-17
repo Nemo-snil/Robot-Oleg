@@ -50,7 +50,7 @@ namespace motors {
         xQueue = xQueueCreate(1, sizeof(geometry_msgs::Twist*));
         xSemaphore = xSemaphoreCreateMutex();
 
-        xTaskCreate(loop, "Encoders", 2048, NULL, 1, NULL);
+        xTaskCreate(loop, "Encoders", 4096, NULL, 1, NULL);
         xTaskCreate(motor_queue, "MotorQueue", 4096, NULL, 1, NULL);
 
         arr_msg.data_length = 4;
@@ -71,7 +71,7 @@ namespace motors {
     }
 
     void encoder_reset_callback(const std_srvs::EmptyRequest& req, std_srvs::EmptyResponse& res)  {
-        xTaskCreate(encoder_reset_semaphore, "EncoderReset", 2048, NULL, 2, NULL);
+        xTaskCreate(encoder_reset_semaphore, "EncoderReset", 4096, NULL, 2, NULL);
     }
 
     void encoder_reset_semaphore(void* pvParameters) {

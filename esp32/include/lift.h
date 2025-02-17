@@ -88,11 +88,11 @@ namespace lift {
     }
 
     void lift_up_callback(const std_srvs::EmptyRequest& req, std_srvs::EmptyResponse& res) {
-        xTaskCreate(lift_up, "LiftUp", 1024, NULL, 1, NULL);
+        xTaskCreate(lift_up, "LiftUp", 4096, NULL, 2, NULL);
     }
 
     void lift_down_callback(const std_srvs::EmptyRequest& req, std_srvs::EmptyResponse& res) {
-        xTaskCreate(lift_down, "LiftDown", 1024, NULL, 1, NULL);
+        xTaskCreate(lift_down, "LiftDown", 4096, NULL, 2, NULL);
     }
 
     void lift_up(void* pvParameters) {

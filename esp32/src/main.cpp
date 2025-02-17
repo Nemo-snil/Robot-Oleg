@@ -22,7 +22,7 @@ void setup() {
   motors::setup();
   lift::setup();
   bluetooth::setup();
-  xTaskCreate(spin, "spinOnce", 2048, NULL, 2, NULL);
+  xTaskCreate(spin, "spinOnce", 4096, NULL, 2, NULL);
 }
 
 void loop() {
