@@ -16,7 +16,7 @@ void spin(void *pvParameters) {
 
 void setup() {
   // put your setup code here, to run once:
-  nh.getHardware()->setBaud(1000000);
+  nh.getHardware()->setBaud(115200);
   nh.initNode();
 
   motors::setup();
