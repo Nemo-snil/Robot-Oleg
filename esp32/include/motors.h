@@ -11,8 +11,6 @@
 namespace motors {
     QueueHandle_t xQueue;
     SemaphoreHandle_t xSemaphore;
-    
-    bool service_done;
 
     void loop(void* pvParameters);
 
@@ -73,23 +71,15 @@ namespace motors {
     }
 
     void encoder_reset_callback(const std_srvs::EmptyRequest& req, std_srvs::EmptyResponse& res)  {
-        if (xSemaphoreTake(xSemaphore, portMAX_DELAY) == pdTRUE) {
-            service_done = false;
-            xTaskCreate(encoder_reset_semaphore, "EncoderReset", 1024, NULL, 2, NULL);
-            while (service_done == false) {
-                nh.spinOnce();
-                vTaskDelay(5 / portTICK_PERIOD_MS);
-            }
-
-            xSemaphoreGive(xSemaphore);
-        }
+        xTaskCreate(encoder_reset_semaphore, "EncoderReset", 1024, NULL, 1, NULL);
     }
 
     void encoder_reset_semaphore(void* pvParameters) {
-        resetEncoder();
+        if (xSemaphoreTake(xSemaphore, portMAX_DELAY) == pdTRUE) {
+            resetEncoder();
+            xSemaphoreGive(xSemaphore);
+        }
         vTaskDelete(NULL);
-
-        service_done = true;
     }
 
     void motors_callback(const geometry_msgs::Twist& msg) {
