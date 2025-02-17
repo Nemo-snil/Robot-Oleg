@@ -39,8 +39,8 @@ class Transporter:
             self.marker_orientation = euler_from_quaternion([markers.markers[0].pose.orientation.w, markers.markers[0].pose.orientation.x, markers.markers[0].pose.orientation.y, markers.markers[0].pose.orientation.z])
             self.marker_orientation = self.marker_orientation[0], self.marker_orientation[1], self.marker_orientation[2]
             # Положение для центра робота
-            self.marker_position.x += math.sin(self.marker_orientation[1]) * 300
-            self.marker_position.z += math.cos(self.marker_orientation[1]) * 300
+            self.marker_position.x += math.sin(self.marker_orientation[1]) * 360
+            self.marker_position.z += math.cos(self.marker_orientation[1]) * 360
 
             self.is_new_marker = True
             #rospy.loginfo(self.marker_orientation)
