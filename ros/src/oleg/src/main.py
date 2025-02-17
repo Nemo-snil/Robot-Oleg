@@ -22,7 +22,7 @@ class Transporter:
 
         self.marker_position: Point = Point()
         self.marker_position.x = 0
-        self.marker_position.z = 1200
+        self.marker_position.z = 1500
         self.marker_orientation = [0, 0, 0]
         self.is_new_marker = False
 
@@ -90,9 +90,9 @@ class Transporter:
         self.speed_pub.publish(speed)
 
     def move_to_chair(self):
-        pid_x = PID(.002, 0, 0, setpoint=1000, output_limits=(-.5, .5))
-        pid_y = PID(.004, 0, 0, setpoint=0, output_limits=(-.5, .5))
-        pid_z = PID(.5, 0, 0, setpoint=0, output_limits=(-.5, .5))
+        pid_x = PID(.001, 0, 0, setpoint=1500, output_limits=(-.2, .2))
+        pid_y = PID(.001, 0, 0, setpoint=0, output_limits=(-.2, .2))
+        pid_z = PID(.4, 0, 0, setpoint=0, output_limits=(-.2, .2))
 
         #while not rospy.is_shutdown() and not (990 < self.marker_distance(self.marker_position) < 1010 and -0.005 < self.marker_orientation[1] < 0.005):
         while not rospy.is_shutdown():
@@ -105,6 +105,8 @@ class Transporter:
             self.move_with_angle(-x, y, angle, z)
 
             rospy.sleep(0.1)
+        
+        self.speed_pub.publish(Twist())
 
     def move_under_chair(self):
         pid_y = PID(.004, 0, 0, setpoint=-60, output_limits=(-0.2, 0.2))
